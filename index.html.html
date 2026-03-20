@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Rate Today — Get Your Personalized Mortgage Rate in 2 Minutes</title>
+<meta name="description" content="No SSN. No credit pull. See your real mortgage rate in 2 minutes. DSCR, Non-QM, Conventional — Rate Hero finds the best program for your situation.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* LIGHT MODE */
+:root {
+  --bg:       #F8FAFF;
+  --bg2:      #FFFFFF;
+  --bg3:      #EEF2FF;
+  --blue:     #2563EB;
+  --blue-l:   #3B82F6;
+  --amber:    #F5B731;
+  --amber2:   #E8920A;
+  --text:     #0F172A;
+  --text2:    #374151;
+  --text3:    #6B7280;
+  --text4:    #9CA3AF;
+  --border:   rgba(0,0,0,0.08);
+  --border2:  rgba(37,99,235,0.2);
+  --card:     #FFFFFF;
+  --card-sh:  0 4px 28px rgba(0,0,0,0.08), 0 1px 4px rgba(0,0,0,0.04);
+  --nav-bg:   rgba(248,250,255,0.94);
+  --opt-bg:   #F1F5FD;
+  --opt-sel:  rgba(37,99,235,0.08);
+  --inp-bg:   #F8FAFF;
+  --strip-bg: #EEF2FF;
+  --hiw-bg:   #F1F5FD;
+  --grid:     rgba(37,99,235,0.045);
+  --glow:     rgba(37,99,235,0.07);
+  --tbg:      #E5E7EB;
+  --fd: 'Bebas Neue', sans-serif;
+  --fb: 'Plus Jakarta Sans', sans-serif;
+  --tr: all .3s ease;
+}
+
+/* DARK MODE */
+[data-theme="dark"] {
+  --bg:       #060D1A;
+  --bg2:      #0A1628;
+  --bg3:      #0F1E38;
+  --text:     #FFFFFF;
+  --text2:    rgba(255,255,255,0.82);
+  --text3:    rgba(255,255,255,0.52);
+  --text4:    rgba(255,255,255,0.28);
+  --border:   rgba(255,255,255,0.09);
+  --border2:  rgba(37,99,235,0.28);
+  --card:     #0A1628;
+  --card-sh:  0 32px 80px rgba(0,0,0,0.4), 0 0 0 1px rgba(37,99,235,0.12);
+  --nav-bg:   rgba(6,13,26,0.94);
+  --opt-bg:   #0F1E38;
+  --opt-sel:  rgba(37,99,235,0.16);
+  --inp-bg:   #0F1E38;
+  --strip-bg: #0A1628;
+  --hiw-bg:   #0A1628;
+  --grid:     rgba(37,99,235,0.04);
+  --glow:     rgba(37,99,235,0.12);
+  --tbg:      #1E3A5F;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--fb); background: var(--bg); color: var(--text);
+  min-height: 100vh; overflow-x: hidden;
+  transition: background .3s, color .3s;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image: linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size: 48px 48px; transition: var(--tr);
+}
+.glow {
+  position: fixed; width: 700px; height: 700px; border-radius: 50%;
+  background: radial-gradient(circle,var(--glow) 0%,transparent 70%);
+  top: -180px; left: 50%; transform: translateX(-50%);
+  pointer-events: none; z-index: 0; transition: var(--tr);
+}
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 48px; height: 62px;
+  background: var(--nav-bg); backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: background .3s, border-color .3s;
+}
+.nav-logo {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--fd); font-size: 20px; letter-spacing: 3px;
+  color: var(--text); text-decoration: none; transition: color .3s;
+}
+.nav-logo .lh { color: var(--blue-l); }
+.bolt { width: 13px; height: 18px; flex-shrink: 0; }
+.nav-r { display: flex; align-items: center; gap: 14px; }
+.nav-ph {
+  font-size: 13px; font-weight: 700; color: var(--blue);
+  text-decoration: none; transition: color .2s;
+}
+.nav-ph:hover { color: var(--blue-l); }
+.nav-nmls { font-size: 10px; color: var(--text4); letter-spacing: .05em; }
+
+/* TOGGLE */
+.ttog { display: flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; }
+.ttrack {
+  width: 40px; height: 22px; background: var(--tbg); border-radius: 99px;
+  position: relative; border: 1px solid var(--border); transition: background .3s;
+}
+.tthumb {
+  position: absolute; top: 3px; left: 3px;
+  width: 14px; height: 14px; border-radius: 50%; background: var(--blue);
+  transition: transform .25s ease;
+}
+[data-theme="dark"] .tthumb { transform: translateX(18px); }
+.tico { font-size: 14px; color: var(--text3); transition: color .3s; }
+
+/* HERO */
+.hero {
+  position: relative; z-index: 1; min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: center;
+  max-width: 1280px; margin: 0 auto; padding: 100px 48px 60px;
+}
+.hero-l { padding-right: 60px; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(37,99,235,0.08); border: 1px solid rgba(37,99,235,0.18);
+  padding: 6px 14px; border-radius: 99px;
+  font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--blue); margin-bottom: 28px;
+  animation: fu .6s ease both;
+}
+h1 {
+  font-family: var(--fd); font-size: clamp(50px,5.4vw,78px);
+  line-height: .95; letter-spacing: 1px; color: var(--text);
+  margin-bottom: 24px; animation: fu .6s .1s ease both; transition: color .3s;
+}
+h1 .hb { color: var(--blue); }
+[data-theme="dark"] h1 .hb { color: var(--blue-l); }
+h1 .ha { color: var(--amber2); }
+[data-theme="dark"] h1 .ha { color: var(--amber); }
+.sub {
+  font-size: 17px; color: var(--text2); line-height: 1.75; max-width: 420px;
+  margin-bottom: 32px; animation: fu .6s .2s ease both; transition: color .3s;
+}
+.pills {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
+  animation: fu .6s .3s ease both;
+}
+.pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg3); border: 1px solid var(--border);
+  padding: 7px 13px; border-radius: 8px;
+  font-size: 12px; font-weight: 600; color: var(--text2); transition: var(--tr);
+}
+.pill .ck { color: #16A34A; }
+[data-theme="dark"] .pill { color: rgba(255,255,255,0.6); }
+.stats { display: flex; gap: 32px; animation: fu .6s .4s ease both; }
+.snum {
+  font-family: var(--fd); font-size: 32px; letter-spacing: 1px;
+  color: var(--text); line-height: 1; transition: color .3s;
+}
+.snum .sa { color: var(--amber2); }
+[data-theme="dark"] .snum .sa { color: var(--amber); }
+.slbl { font-size: 11px; color: var(--text3); margin-top: 3px; letter-spacing: .04em; }
+
+/* FORM CARD */
+.fc {
+  background: var(--card); border: 1px solid var(--border2);
+  border-radius: 20px; padding: 36px 36px 32px;
+  box-shadow: var(--card-sh); position: relative; overflow: hidden;
+  animation: fu .6s .15s ease both;
+  transition: background .3s, border-color .3s, box-shadow .3s;
+}
+.fc::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg,var(--amber2),var(--blue),var(--amber2));
+  background-size: 200% 100%; animation: sh 3s linear infinite;
+}
+@keyframes sh { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+.pw { margin-bottom: 28px; }
+.pl { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.pt { font-size: 12px; color: var(--text3); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
+.pp { font-size: 12px; color: var(--blue); font-weight: 700; }
+.ptrk { height: 3px; background: var(--bg3); border-radius: 99px; overflow: hidden; transition: background .3s; }
+.pbar { height: 100%; background: linear-gradient(90deg,var(--blue),var(--blue-l)); border-radius: 99px; transition: width .4s ease; width: 5%; }
+
+.step { display: none; }
+.step.active { display: block; }
+.slbl2 { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+.step h2 { font-family: var(--fd); font-size: 27px; letter-spacing: .5px; margin-bottom: 6px; line-height: 1.1; color: var(--text); transition: color .3s; }
+.ssub { font-size: 13px; color: var(--text3); margin-bottom: 20px; }
+
+.og { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 14px; }
+.og.one { grid-template-columns: 1fr; }
+.opt {
+  background: var(--opt-bg); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 12px 14px; cursor: pointer;
+  transition: all .18s; text-align: left;
+}
+.opt:hover { border-color: var(--blue-l); background: var(--opt-sel); }
+.opt.sel { border-color: var(--blue); background: var(--opt-sel); box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
+.oi { font-size: 18px; display: block; margin-bottom: 5px; }
+.ot { font-size: 13px; font-weight: 700; color: var(--text); display: block; transition: color .3s; }
+.os { font-size: 11px; color: var(--text3); display: block; margin-top: 2px; }
+
+.iw { margin-bottom: 12px; }
+.iw label { display: block; font-size: 12px; font-weight: 700; color: var(--text2); margin-bottom: 6px; letter-spacing: .04em; }
+.iw input, .iw select {
+  width: 100%; background: var(--inp-bg); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 12px 16px; font-family: var(--fb); font-size: 14px;
+  color: var(--text); transition: border-color .2s, background .3s, color .3s; outline: none;
+}
+.iw input::placeholder { color: var(--text4); }
+.iw input:focus, .iw select:focus { border-color: var(--blue); }
+[data-theme="dark"] .iw select option { background: #0F1E38; }
+.ir { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+.bp {
+  width: 100%; background: var(--blue); color: #fff; border: none; border-radius: 10px;
+  padding: 14px; font-family: var(--fb); font-size: 15px; font-weight: 700; cursor: pointer;
+  transition: all .2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.bp:hover:not(:disabled) { background: var(--blue-l); transform: translateY(-1px); box-shadow: 0 8px 24px rgba(37,99,235,0.3); }
+.bp:disabled { background: rgba(37,99,235,0.28); cursor: not-allowed; }
+.bb { background: none; border: none; color: var(--text3); font-family: var(--fb); font-size: 13px; cursor: pointer; padding: 8px 0; transition: color .2s; }
+.bb:hover { color: var(--text); }
+.ff { display: flex; align-items: center; justify-content: space-between; margin-top: 12px; }
+.pn { font-size: 11px; color: var(--text4); }
+
+/* SUCCESS */
+.ss { text-align: center; padding: 16px 0; }
+.si {
+  width: 64px; height: 64px; background: rgba(22,163,74,0.1); border: 2px solid rgba(22,163,74,0.35);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 20px; font-size: 28px;
+}
+.ss h2 { font-family: var(--fd); font-size: 30px; margin-bottom: 8px; color: var(--text); }
+.ss p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
+.nxt { text-align: left; }
+.ns {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 12px 0; border-bottom: 1px solid var(--border);
+}
+.ns:last-child { border: none; }
+.nn {
+  width: 24px; height: 24px; background: rgba(37,99,235,0.1); border: 1px solid rgba(37,99,235,0.25);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700; color: var(--blue); flex-shrink: 0;
+}
+.nt { font-size: 13px; color: var(--text2); line-height: 1.6; }
+.nt strong { color: var(--text); }
+
+/* PROOF */
+.ps { position: relative; z-index: 1; background: var(--strip-bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 24px 48px; transition: background .3s,border-color .3s; }
+.pi { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; }
+.pitem { display: flex; align-items: center; gap: 10px; }
+.pico { font-size: 20px; }
+.pnum { font-family: var(--fd); font-size: 22px; letter-spacing: 1px; color: var(--text); transition: color .3s; }
+.plbl { font-size: 11px; color: var(--text3); }
+
+/* PROGRAMS */
+.prgs { position: relative; z-index: 1; max-width: 1280px; margin: 0 auto; padding: 64px 48px; }
+.sey  { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: .15em; text-transform: uppercase; margin-bottom: 10px; }
+.sti  { font-family: var(--fd); font-size: 42px; letter-spacing: 1px; margin-bottom: 8px; color: var(--text); transition: color .3s; }
+.ssu  { font-size: 16px; color: var(--text2); margin-bottom: 40px; max-width: 500px; }
+.pgrid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; }
+.pc {
+  background: var(--card); border: 1px solid var(--border); border-radius: 14px;
+  padding: 24px; cursor: pointer; transition: all .2s; text-decoration: none; color: inherit;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.pc:hover { border-color: var(--blue-l); transform: translateY(-3px); box-shadow: 0 8px 24px rgba(37,99,235,0.12); }
+.pe { font-size: 28px; margin-bottom: 12px; display: block; }
+.pn2 { font-weight: 800; font-size: 15px; margin-bottom: 4px; color: var(--text); transition: color .3s; }
+.ptag { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); margin-bottom: 10px; display: block; }
+.pd { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+/* HOW IT WORKS */
+.hiw { position: relative; z-index: 1; background: var(--hiw-bg); border-top: 1px solid var(--border); padding: 64px 48px; transition: background .3s,border-color .3s; }
+.hiwi { max-width: 1280px; margin: 0 auto; }
+.sgrid { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; margin-top: 40px; }
+.hs { position: relative; }
+.hs::after { content: '→'; position: absolute; top: 18px; right: -14px; color: var(--text4); font-size: 18px; }
+.hs:last-child::after { display: none; }
+.hn { font-family: var(--fd); font-size: 48px; color: rgba(37,99,235,0.18); line-height: 1; margin-bottom: 12px; }
+.ht { font-size: 15px; font-weight: 800; margin-bottom: 6px; color: var(--text); transition: color .3s; }
+.hd { font-size: 13px; color: var(--text2); line-height: 1.65; }
+
+footer {
+  position: relative; z-index: 1; border-top: 1px solid var(--border);
+  padding: 24px 48px; display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px; transition: border-color .3s;
+}
+.fl { font-size: 11px; color: var(--text3); line-height: 1.7; max-width: 680px; }
+.flinks { display: flex; gap: 16px; }
+.flinks a { font-size: 12px; color: var(--text3); text-decoration: none; transition: color .2s; }
+.flinks a:hover { color: var(--blue); }
+
+@keyframes fu { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+
+/* BRRRR REDIRECT OVERLAY */
+.brrrr-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(0,0,0,0.72); align-items: center; justify-content: center; padding: 24px;
+}
+.brrrr-overlay.active { display: flex; }
+.brrrr-modal {
+  background: var(--card); border: 1px solid var(--border2);
+  border-radius: 20px; padding: 36px; max-width: 420px; width: 100%;
+  box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+  animation: fu .3s ease both;
+}
+.brrrr-modal .bm-icon { font-size: 36px; margin-bottom: 16px; display: block; }
+.brrrr-modal h3 {
+  font-family: var(--fd); font-size: 26px; letter-spacing: .5px;
+  color: var(--text); margin-bottom: 10px; line-height: 1.1;
+}
+.brrrr-modal p { font-size: 14px; color: var(--text2); line-height: 1.7; margin-bottom: 24px; }
+.brrrr-modal .bm-tag {
+  display: inline-block; background: rgba(200,131,26,0.12);
+  border: 1px solid rgba(200,131,26,0.3); color: #C8831A;
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .1em; padding: 4px 10px; border-radius: 99px; margin-bottom: 16px;
+}
+.bm-btns { display: flex; flex-direction: column; gap: 10px; }
+.bm-primary {
+  width: 100%; background: #C8831A; color: #fff; border: none;
+  border-radius: 10px; padding: 14px; font-family: var(--fb);
+  font-size: 15px; font-weight: 700; cursor: pointer; transition: all .2s;
+}
+.bm-primary:hover { background: #e9a83a; transform: translateY(-1px); }
+.bm-secondary {
+  width: 100%; background: none; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 13px; font-family: var(--fb);
+  font-size: 13px; color: var(--text3); cursor: pointer; transition: all .2s;
+}
+.bm-secondary:hover { color: var(--text); border-color: var(--blue-l); }
+
+/* RESULT MOMENT SCREEN */
+.result-screen { padding: 4px 0; }
+.result-match {
+  background: linear-gradient(135deg, rgba(37,99,235,0.07) 0%, rgba(37,99,235,0.03) 100%);
+  border: 1.5px solid rgba(37,99,235,0.18); border-radius: 14px;
+  padding: 20px; margin-bottom: 16px;
+}
+[data-theme="dark"] .result-match { background: rgba(37,99,235,0.1); }
+.result-match-label {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--blue); margin-bottom: 8px;
+}
+.result-program {
+  font-family: var(--fd); font-size: 24px; letter-spacing: .5px;
+  color: var(--text); margin-bottom: 4px;
+}
+.result-rate {
+  font-family: var(--fd); font-size: 34px; letter-spacing: 1px; color: var(--blue);
+  line-height: 1;
+}
+[data-theme="dark"] .result-rate { color: var(--blue-l); }
+.result-rate-label { font-size: 11px; color: var(--text3); margin-top: 4px; }
+
+.result-rows { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+.result-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 14px; background: var(--bg3); border-radius: 10px;
+  font-size: 13px; transition: background .3s;
+}
+.result-row-label { color: var(--text3); font-weight: 500; }
+.result-row-val { color: var(--text); font-weight: 700; }
+.result-benefit {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: #16A34A; font-weight: 600;
+  background: rgba(22,163,74,0.07); border: 1px solid rgba(22,163,74,0.18);
+  border-radius: 8px; padding: 8px 12px; margin-bottom: 18px;
+}
+.result-disclaimer { font-size: 10px; color: var(--text4); line-height: 1.6; margin-top: 10px; }
+
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:90px 24px 40px;gap:40px}
+  .hero-l{padding-right:0}
+  .pgrid{grid-template-columns:1fr 1fr}
+  .sgrid{grid-template-columns:1fr 1fr}
+  .hs::after{display:none}
+  nav{padding:0 20px}
+  .prgs,.hiw,.ps{padding-left:24px;padding-right:24px}
+  footer{padding:20px 24px}
+  .nav-nmls{display:none}
+}
+@media(max-width:560px){
+  .pgrid,.sgrid,.og{grid-template-columns:1fr}
+  .ir{grid-template-columns:1fr}
+  .stats{gap:20px}
+  h1{font-size:46px}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<!-- ══ BRRRR REDIRECT OVERLAY ══ -->
+<div class="brrrr-overlay" id="brrrr-overlay">
+  <div class="brrrr-modal">
+    <span class="bm-icon">🔄</span>
+    <div class="bm-tag">Hard Money Exit Specialist</div>
+    <h3>We Have A Dedicated Page For This</h3>
+    <p>BRRRR refinances out of hard money are our specialty — we built a whole page just for that situation, with a DSCR calculator, live rate math, and a faster path to your quote.</p>
+    <div class="bm-btns">
+      <button class="bm-primary" onclick="window.location.href='https://getoutofhardmoney.com'">Take Me There →</button>
+      <button class="bm-secondary" onclick="closeBrrrr()">Stay Here — Continue Anyway</button>
+    </div>
+  </div>
+</div>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <svg class="bolt" viewBox="0 0 28 40"><defs><linearGradient id="bg" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F5B731"/><stop offset="100%" stop-color="#E8920A"/></linearGradient></defs><polygon points="19,0 6,20 13,20 3,40 26,16 17,16" fill="url(#bg)"/></svg>
+    RATE <span class="lh">HERO</span>
+  </a>
+  <div class="nav-r">
+    <a href="tel:7473081635" class="nav-ph">(747) 308-1635</a>
+    <span class="nav-nmls">NMLS #2822806</span>
+    <div class="ttog" onclick="toggleTheme()" title="Toggle dark mode">
+      <span class="tico" id="tico">🌙</span>
+      <div class="ttrack"><div class="tthumb" id="tthumb"></div></div>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-l">
+    <div class="eyebrow">
+      <svg width="10" height="14" viewBox="0 0 28 40"><defs><linearGradient id="be" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F5B731"/><stop offset="100%" stop-color="#E8920A"/></linearGradient></defs><polygon points="19,0 6,20 13,20 3,40 26,16 17,16" fill="url(#be)"/></svg>
+      No SSN &nbsp;·&nbsp; No Credit Pull &nbsp;·&nbsp; 2 Minutes
+    </div>
+    <h1>YOUR RATE.<br><span class="hb">RIGHT NOW.</span><br><span class="ha">TODAY.</span></h1>
+    <p class="sub">Stop guessing. See your actual mortgage rate in under 2 minutes — no social security number, no credit inquiry, no B.S.</p>
+    <div class="pills">
+      <div class="pill"><span class="ck">✓</span> DSCR Loans</div>
+      <div class="pill"><span class="ck">✓</span> Non-QM / Bank Statement</div>
+      <div class="pill"><span class="ck">✓</span> Conventional / FHA / VA</div>
+      <div class="pill"><span class="ck">✓</span> HELOC &amp; BRRRR</div>
+    </div>
+    <div class="stats">
+      <div><div class="snum">$200<span class="sa">M+</span></div><div class="slbl">Funded</div></div>
+      <div><div class="snum">21<span class="sa">-Day</span></div><div class="slbl">Avg Close</div></div>
+      <div><div class="snum">30<span class="sa">+</span></div><div class="slbl">States</div></div>
+    </div>
+  </div>
+
+  <div class="fc" id="formCard">
+    <div class="pw">
+      <div class="pl"><span class="pt" id="stepLabel">Step 1 of 8</span><span class="pp" id="stepPct">12%</span></div>
+      <div class="ptrk"><div class="pbar" id="progBar"></div></div>
+    </div>
+
+    <div class="step active" id="s1">
+      <div class="slbl2">Loan Program</div><h2>What Are You Looking For?</h2>
+      <p class="ssub">Select the program that fits your situation.</p>
+      <div class="og one">
+        <div class="opt" onclick="pick('program','dscr',this)"><span class="oi">📈</span><span class="ot">DSCR / Rental Property Loan</span><span class="os">Qualify on rental income — no W-2 or tax returns needed</span></div>
+        <div class="opt" onclick="pick('program','nonqm',this)"><span class="oi">📋</span><span class="ot">Non-QM / Bank Statement Loan</span><span class="os">Self-employed, 1099, or complex income situations</span></div>
+        <div class="opt" onclick="pick('program','conventional',this)"><span class="oi">🏠</span><span class="ot">Conventional / FHA / VA</span><span class="os">W-2 income, strong credit, or veteran status</span></div>
+        <div class="opt" onclick="pick('program','heloc',this)"><span class="oi">💰</span><span class="ot">HELOC / Cash-Out Refi</span><span class="os">Tap your equity — borrow up to 90% LTV</span></div>
+        <div class="opt" onclick="pick('program','brrrr',this)"><span class="oi">🔄</span><span class="ot">BRRRR / Hard Money Exit</span><span class="os">Refinance out of hard money into long-term financing</span></div>
+      </div>
+    </div>
+
+    <div class="step" id="s2">
+      <div class="slbl2">About You</div><h2>Which Best Describes You?</h2>
+      <p class="ssub">Helps us find programs built for your situation.</p>
+      <div class="og">
+        <div class="opt" onclick="pick('borrower','homeowner',this)"><span class="oi">🏠</span><span class="ot">Homeowner / Buyer</span><span class="os">Primary or second home</span></div>
+        <div class="opt" onclick="pick('borrower','selfemployed',this)"><span class="oi">💼</span><span class="ot">Self-Employed</span><span class="os">Business owner / 1099</span></div>
+        <div class="opt" onclick="pick('borrower','investor',this)"><span class="oi">📈</span><span class="ot">Real Estate Investor</span><span class="os">1–20+ unit portfolio</span></div>
+        <div class="opt" onclick="pick('borrower','foreign',this)"><span class="oi">🌍</span><span class="ot">Foreign National</span><span class="os">Non-US resident investing in US</span></div>
+      </div>
+      <div class="ff"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <div class="step" id="s3">
+      <div class="slbl2">Property Type</div><h2>What Type of Property?</h2>
+      <p class="ssub">Affects which loan programs are available.</p>
+      <div class="og">
+        <div class="opt" onclick="pick('property','sfr',this)"><span class="oi">🏠</span><span class="ot">Single Family</span><span class="os">SFR / Detached home</span></div>
+        <div class="opt" onclick="pick('property','multi',this)"><span class="oi">🏢</span><span class="ot">2–4 Units</span><span class="os">Duplex, triplex, quad</span></div>
+        <div class="opt" onclick="pick('property','condo',this)"><span class="oi">🏙️</span><span class="ot">Condo / Townhome</span><span class="os">Attached unit</span></div>
+        <div class="opt" onclick="pick('property','commercial',this)"><span class="oi">🏗️</span><span class="ot">5+ Units / Commercial</span><span class="os">Large portfolio or mixed-use</span></div>
+      </div>
+      <div class="ff"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <div class="step" id="s4">
+      <div class="slbl2">Location</div><h2>Where Is The Property?</h2>
+      <p class="ssub">We lend in 30+ states. This helps us find your best rate.</p>
+      <div class="iw">
+        <label>Property State</label>
+        <select id="stateSelect" onchange="stateChosen()">
+          <option value="">Select a state...</option>
+          <option>Alabama</option><option>Alaska</option><option>Arizona</option><option>Arkansas</option><option>California</option><option>Colorado</option><option>Connecticut</option><option>Delaware</option><option>Florida</option><option>Georgia</option><option>Hawaii</option><option>Idaho</option><option>Illinois</option><option>Indiana</option><option>Iowa</option><option>Kansas</option><option>Kentucky</option><option>Louisiana</option><option>Maine</option><option>Maryland</option><option>Massachusetts</option><option>Michigan</option><option>Minnesota</option><option>Mississippi</option><option>Missouri</option><option>Montana</option><option>Nebraska</option><option>Nevada</option><option>New Hampshire</option><option>New Jersey</option><option>New Mexico</option><option>New York</option><option>North Carolina</option><option>North Dakota</option><option>Ohio</option><option>Oklahoma</option><option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option><option>South Carolina</option><option>South Dakota</option><option>Tennessee</option><option>Texas</option><option>Utah</option><option>Vermont</option><option>Virginia</option><option>Washington</option><option>West Virginia</option><option>Wisconsin</option><option>Wyoming</option>
+        </select>
+      </div>
+      <button class="bp" id="stateCont" onclick="next()" disabled>Continue →</button>
+      <div class="ff" style="margin-top:10px"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <div class="step" id="s5">
+      <div class="slbl2">Loan Amount</div><h2>How Much Do You Need?</h2>
+      <p class="ssub">Approximate is fine — helps us match the right program.</p>
+      <div class="og">
+        <div class="opt" onclick="pick('amount','under300',this)"><span class="ot">Under $300K</span></div>
+        <div class="opt" onclick="pick('amount','300to500',this)"><span class="ot">$300K – $500K</span></div>
+        <div class="opt" onclick="pick('amount','500to750',this)"><span class="ot">$500K – $750K</span></div>
+        <div class="opt" onclick="pick('amount','750to1m',this)"><span class="ot">$750K – $1M</span></div>
+        <div class="opt" onclick="pick('amount','1mto2m',this)"><span class="ot">$1M – $2M</span></div>
+        <div class="opt" onclick="pick('amount','2mplus',this)"><span class="ot">$2M+</span></div>
+      </div>
+      <div class="ff"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <div class="step" id="s6">
+      <div class="slbl2">Credit Score</div><h2>Estimated Credit Score?</h2>
+      <p class="ssub">No hard pull — helps us identify the best programs instantly.</p>
+      <div class="og one">
+        <div class="opt" onclick="pick('credit','760plus',this)"><span class="ot">760+ &nbsp;<span style="font-weight:500;color:var(--text3)">Excellent</span></span></div>
+        <div class="opt" onclick="pick('credit','720to759',this)"><span class="ot">720–759 &nbsp;<span style="font-weight:500;color:var(--text3)">Very Good</span></span></div>
+        <div class="opt" onclick="pick('credit','680to719',this)"><span class="ot">680–719 &nbsp;<span style="font-weight:500;color:var(--text3)">Good</span></span></div>
+        <div class="opt" onclick="pick('credit','640to679',this)"><span class="ot">640–679 &nbsp;<span style="font-weight:500;color:var(--text3)">Fair</span></span></div>
+        <div class="opt" onclick="pick('credit','600to639',this)"><span class="ot">600–639 &nbsp;<span style="font-weight:500;color:var(--text3)">Below Average</span></span></div>
+        <div class="opt" onclick="pick('credit','under600',this)"><span class="ot">Under 600 &nbsp;<span style="font-weight:500;color:var(--text3)">Let's talk</span></span></div>
+      </div>
+      <div class="ff"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <div class="step" id="s7">
+      <div class="slbl2">Timeline</div><h2>When Do You Want To Close?</h2>
+      <p class="ssub">We work at your pace — from ASAP to just researching.</p>
+      <div class="og">
+        <div class="opt" onclick="pick('timeline','asap',this)"><span class="oi">⚡</span><span class="ot">ASAP</span><span class="os">Within 30 days</span></div>
+        <div class="opt" onclick="pick('timeline','1to3',this)"><span class="oi">📅</span><span class="ot">1–3 Months</span></div>
+        <div class="opt" onclick="pick('timeline','3to6',this)"><span class="oi">🗓️</span><span class="ot">3–6 Months</span></div>
+        <div class="opt" onclick="pick('timeline','researching',this)"><span class="oi">🔍</span><span class="ot">Just Researching</span></div>
+      </div>
+      <div class="ff"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <!-- ══ STEP 8: RESULT MOMENT ══ -->
+    <div class="step" id="s8">
+      <div class="slbl2">Your Match</div><h2>Based On Your Answers...</h2>
+      <p class="ssub">Here's what you likely qualify for. Enter your info to unlock the full breakdown.</p>
+      <div class="result-screen">
+        <div class="result-match">
+          <div class="result-match-label">Best Program Match</div>
+          <div class="result-program" id="res-program">DSCR Rental Loan</div>
+          <div class="result-rate" id="res-rate">7.00% – 7.75%</div>
+          <div class="result-rate-label">Estimated rate range · Subject to qualification</div>
+        </div>
+        <div class="result-rows">
+          <div class="result-row">
+            <span class="result-row-label">Loan Amount</span>
+            <span class="result-row-val" id="res-amount">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Property State</span>
+            <span class="result-row-val" id="res-state">—</span>
+          </div>
+          <div class="result-row">
+            <span class="result-row-label">Timeline</span>
+            <span class="result-row-val" id="res-timeline">—</span>
+          </div>
+        </div>
+        <div class="result-benefit" id="res-benefit">
+          <span>✓</span><span>No W-2s or tax returns required · LLC ownership allowed</span>
+        </div>
+        <button class="bp" onclick="next()">
+          <svg width="11" height="16" viewBox="0 0 28 40"><defs><linearGradient id="bs2" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F5B731"/><stop offset="100%" stop-color="#E8920A"/></linearGradient></defs><polygon points="19,0 6,20 13,20 3,40 26,16 17,16" fill="url(#bs2)"/></svg>
+          Unlock My Full Rate Breakdown →
+        </button>
+        <p class="result-disclaimer" style="margin-top:10px">* Estimated rates based on current market conditions. Actual rate depends on final underwriting, LTV, DSCR ratio, and credit profile. Not a commitment to lend.</p>
+      </div>
+      <div class="ff" style="margin-top:12px"><button class="bb" onclick="back()">← Back</button></div>
+    </div>
+
+    <!-- ══ STEP 9: CONTACT FORM ══ -->
+    <div class="step" id="s9">
+      <div class="slbl2">Almost There</div><h2>Where Do We Send Your Rate?</h2>
+      <p class="ssub">A licensed Rate Hero advisor reaches out within 1 hour.</p>
+      <div class="ir">
+        <div class="iw"><label>First Name</label><input id="fn" type="text" placeholder="Sean" oninput="checkForm()"></div>
+        <div class="iw"><label>Last Name</label><input id="ln" type="text" placeholder="Davoodian" oninput="checkForm()"></div>
+      </div>
+      <div class="iw"><label>Email Address</label><input id="em" type="email" placeholder="sean@ratehero.com" oninput="checkForm()"></div>
+      <div class="iw"><label>Phone Number</label><input id="ph" type="tel" placeholder="(747) 308-1635" oninput="checkForm()"></div>
+      <button class="bp" id="submitBtn" disabled onclick="submitForm()" style="margin-top:4px">
+        <svg width="11" height="16" viewBox="0 0 28 40"><defs><linearGradient id="bs" x1="20%" y1="0%" x2="80%" y2="100%"><stop offset="0%" stop-color="#F5B731"/><stop offset="100%" stop-color="#E8920A"/></linearGradient></defs><polygon points="19,0 6,20 13,20 3,40 26,16 17,16" fill="url(#bs)"/></svg>
+        Get My Full Rate Breakdown →
+      </button>
+      <div class="ff" style="margin-top:10px">
+        <button class="bb" onclick="back()">← Back</button>
+        <span class="pn">🔒 No SSN · No credit pull · Never sold</span>
+      </div>
+    </div>
+
+    <!-- ══ STEP 10: SUCCESS ══ -->
+    <div class="step" id="s10">
+      <div class="ss">
+        <div class="si">✓</div>
+        <h2>YOU'RE A HERO.</h2>
+        <p>A licensed Rate Hero advisor will contact you within <strong>1 business hour</strong> with your personalized rate options.</p>
+        <div class="nxt">
+          <div class="ns"><div class="nn">1</div><div class="nt"><strong>Advisor reviews your profile</strong> and identifies the best programs for your situation</div></div>
+          <div class="ns"><div class="nn">2</div><div class="nt"><strong>You receive a personalized rate quote</strong> — no SSN, no credit pull</div></div>
+          <div class="ns"><div class="nn">3</div><div class="nt"><strong>If you love the terms</strong>, we move fast — most deals close in 21 days or less</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ps">
+  <div class="pi">
+    <div class="pitem"><span class="pico">🏠</span><div><div class="pnum">$200M+</div><div class="plbl">Loans Funded</div></div></div>
+    <div class="pitem"><span class="pico">👥</span><div><div class="pnum">5,000+</div><div class="plbl">Clients Served</div></div></div>
+    <div class="pitem"><span class="pico">⚡</span><div><div class="pnum">21 Days</div><div class="plbl">Avg Close Time</div></div></div>
+    <div class="pitem"><span class="pico">🗺️</span><div><div class="pnum">30+ States</div><div class="plbl">We Lend In</div></div></div>
+    <div class="pitem"><span class="pico">⭐</span><div><div class="pnum">4.9 / 5.0</div><div class="plbl">Google Rating</div></div></div>
+  </div>
+</div>
+
+<section class="prgs">
+  <div class="sey">Loan Programs</div>
+  <h2 class="sti">A Home For Every Loan.</h2>
+  <p class="ssu">Whether you're an investor, self-employed, or a W-2 buyer — we have a program for your exact situation.</p>
+  <div class="pgrid">
+    <div class="pc" onclick="scrollToForm()"><span class="pe">📈</span><span class="pn2">DSCR Loans</span><span class="ptag">No Income Docs Required</span><p class="pd">Qualify on rental cash flow. No W-2s, no tax returns, no income limits.</p></div>
+    <div class="pc" onclick="scrollToForm()"><span class="pe">📋</span><span class="pn2">Non-QM Loans</span><span class="ptag">Self-Employed? You Qualify.</span><p class="pd">Bank statements, P&amp;L, or assets instead of W-2s. If the banks said no, this is your path.</p></div>
+    <div class="pc" onclick="scrollToForm()"><span class="pe">🏠</span><span class="pn2">Conventional / FHA / VA</span><span class="ptag">Lowest Rates for W-2 Borrowers</span><p class="pd">Strong credit, W-2 income, or veteran status? We find the best rate — period.</p></div>
+    <div class="pc" onclick="scrollToForm()"><span class="pe">💰</span><span class="pn2">HELOC</span><span class="ptag">Up to 90% LTV</span><p class="pd">Borrow against your equity as a revolving line. Fund renovations, investments, or anything else.</p></div>
+    <div class="pc" onclick="scrollToForm()"><span class="pe">🔄</span><span class="pn2">BRRRR / Hard Money Exit</span><span class="ptag">Refinance Out Fast</span><p class="pd">Get out of high-rate hard money into permanent financing quickly. 21-day close typical.</p></div>
+    <div class="pc" onclick="scrollToForm()"><span class="pe">🌍</span><span class="pn2">Foreign National Loans</span><span class="ptag">No US Credit Needed</span><p class="pd">No SSN, no US credit history. Non-residents can finance US investment properties.</p></div>
+  </div>
+</section>
+
+<section class="hiw">
+  <div class="hiwi">
+    <div class="sey">How It Works</div>
+    <h2 class="sti">Four Steps. 21 Days.</h2>
+    <p class="ssu">We've stripped the process to the bare minimum. No unnecessary paperwork. No back-and-forth.</p>
+    <div class="sgrid">
+      <div class="hs"><div class="hn">01</div><div class="ht">Tell Us Your Goal</div><div class="hd">Answer 8 quick questions. No SSN, no credit pull. Under 2 minutes.</div></div>
+      <div class="hs"><div class="hn">02</div><div class="ht">Talk to a Strategist</div><div class="hd">A real licensed advisor reviews your situation and finds the best programs.</div></div>
+      <div class="hs"><div class="hn">03</div><div class="ht">Get Approved</div><div class="hd">Flexible underwriting built for investors and self-employed borrowers.</div></div>
+      <div class="hs"><div class="hn">04</div><div class="ht">Close Fast</div><div class="hd">Our average close time is 21 days. Most lenders take that long for a pre-approval.</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p class="fl">© 2026 Rate Hero Mortgage, LLC. All rights reserved. NMLS #2822806. Equal Housing Lender. Not a commitment to lend.<br>Sean Davoodian · NMLS #1252107 · 5930 San Fernando Rd, Glendale, CA 91202 · Not affiliated with any government agency.</p>
+  <div class="flinks">
+    <a href="https://goratehero.com">goratehero.com</a>
+    <a href="https://goratehero.com/legal/privacy-policy.html">Privacy Policy</a>
+    <a href="https://goratehero.com/legal/terms-of-use.html">Terms of Use</a>
+  </div>
+</footer>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  html.setAttribute('data-theme', next);
+  document.getElementById('tico').textContent = next === 'dark' ? '☀️' : '🌙';
+  localStorage.setItem('rh-theme', next);
+}
+(function(){
+  const s = localStorage.getItem('rh-theme');
+  if(s){ document.documentElement.setAttribute('data-theme',s); document.getElementById('tico').textContent = s==='dark'?'☀️':'🌙'; }
+})();
+
+const ans={};let cur=1;const TOTAL=9;const AUTO=[1,2,3,5,6,7];
+
+function goStep(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.getElementById('s'+n).classList.add('active');
+  cur=n;
+  const pct = n < 10 ? Math.max(8, Math.round(((n-1)/TOTAL)*100)) : 100;
+  document.getElementById('progBar').style.width = pct+'%';
+  document.getElementById('stepPct').textContent = pct+'%';
+  document.getElementById('stepLabel').textContent = n < 10 ? `Step ${n} of ${TOTAL}` : 'Complete ✓';
+  document.getElementById('formCard').scrollIntoView({behavior:'smooth',block:'nearest'});
+  if(n === 8) populateResult();
+}
+function next(){if(cur<10)goStep(cur+1);}
+function back(){if(cur>1)goStep(cur-1);}
+
+// ── BUILD 1: BRRRR REDIRECT ──────────────────────
+function pick(key,val,el){
+  ans[key]=val;
+  el.closest('.og').querySelectorAll('.opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel');
+  if(key === 'program' && val === 'brrrr'){
+    setTimeout(() => document.getElementById('brrrr-overlay').classList.add('active'), 260);
+    return;
+  }
+  if(AUTO.includes(cur)) setTimeout(next,260);
+}
+function closeBrrrr(){
+  document.getElementById('brrrr-overlay').classList.remove('active');
+  // User chose to stay — advance past Step 1 normally
+  setTimeout(next, 100);
+}
+
+function stateChosen(){
+  const v=document.getElementById('stateSelect').value;
+  document.getElementById('stateCont').disabled=!v;
+  if(v)ans.state=v;
+}
+function checkForm(){
+  const ok=document.getElementById('fn').value.trim()&&document.getElementById('ln').value.trim()&&document.getElementById('em').value.includes('@')&&document.getElementById('ph').value.trim().length>6;
+  document.getElementById('submitBtn').disabled=!ok;
+}
+
+// ── BUILD 2: RESULT MOMENT ───────────────────────
+function populateResult(){
+  const p = ans.program || '';
+  const c = ans.credit  || '';
+  let program, rate, benefit;
+
+  if(p === 'dscr'){
+    program = 'DSCR Rental Loan';
+    rate    = '5.99% – 6.75%';
+    benefit = '✓ No W-2s or tax returns required · LLC ownership allowed';
+  } else if(p === 'nonqm'){
+    program = 'Bank Statement Loan';
+    rate    = '5.99% – 6.99%';
+    benefit = '✓ 12–24 months bank statements · 1099 & self-employed OK';
+  } else if(p === 'heloc'){
+    program = 'HELOC / Cash-Out Refi';
+    rate    = 'Up to 90% LTV';
+    benefit = '✓ Revolving credit line · No need to refi your primary mortgage';
+  } else if(p === 'conventional'){
+    if(c === '760plus'){
+      program = 'Conventional Loan'; rate = '5.99% – 6.50%';
+    } else if(c === '720to759'){
+      program = 'Conventional Loan'; rate = '6.25% – 6.75%';
+    } else if(c === '680to719'){
+      program = 'FHA / Conventional';  rate = '6.50% – 6.99%';
+    } else {
+      program = 'FHA Loan';            rate = '6.75% – 7.25%';
+    }
+    benefit = '✓ Lowest rates for W-2 borrowers · Fast 21-day close';
+  } else {
+    // brrrr stayed or fallback
+    program = 'DSCR / BRRRR Refi';
+    rate    = '5.99% – 6.75%';
+    benefit = '✓ Refinance out of hard money into 30-year fixed';
+  }
+
+  const amtMap = {
+    under300:'Under $300K', '300to500':'$300K–$500K', '500to750':'$500K–$750K',
+    '750to1m':'$750K–$1M', '1mto2m':'$1M–$2M', '2mplus':'$2M+'
+  };
+  const tlMap = {
+    asap:'ASAP (within 30 days)', '1to3':'1–3 Months',
+    '3to6':'3–6 Months', researching:'Just Researching'
+  };
+
+  document.getElementById('res-program').textContent  = program;
+  document.getElementById('res-rate').textContent     = rate;
+  document.getElementById('res-benefit').innerHTML    = `<span>✓</span><span>${benefit.replace('✓ ','')}</span>`;
+  document.getElementById('res-amount').textContent   = amtMap[ans.amount]  || '—';
+  document.getElementById('res-state').textContent    = ans.state            || '—';
+  document.getElementById('res-timeline').textContent = tlMap[ans.timeline]  || '—';
+}
+
+// ── BUILD 3: WIRE TO CLOUDFLARE WORKER ──────────
+function submitForm(){
+  ans.firstName = document.getElementById('fn').value.trim();
+  ans.lastName  = document.getElementById('ln').value.trim();
+  ans.email     = document.getElementById('em').value.trim();
+  ans.phone     = document.getElementById('ph').value.trim();
+
+  const params = new URLSearchParams({
+    source:       'myratetoday',
+    utm_campaign: 'rate-quiz',
+    first:        ans.firstName,
+    last:         ans.lastName,
+    email:        ans.email,
+    phone:        ans.phone,
+    program:      ans.program  || '',
+    borrower:     ans.borrower || '',
+    property:     ans.property || '',
+    state:        ans.state    || '',
+    amount:       ans.amount   || '',
+    credit:       ans.credit   || '',
+    timeline:     ans.timeline || ''
+  });
+
+  window.open('https://ratehero.davoodianshount.workers.dev/?' + params.toString(), '_blank');
+  goStep(10);
+}
+
+function scrollToForm(){document.getElementById('formCard').scrollIntoView({behavior:'smooth',block:'center'});}
+</script>
+</body>
+</html>
